@@ -1,17 +1,17 @@
+/*var express = require('express');
+var router =express.Router()
 var mongoose = require('mongoose')
+require ('../Models/Usuario')
 
-module.exports = function (app) {
-
-    app.get('/usuarios', async (req,res) =>{
+router.get('/registro', async (req,res) =>{
         const usuariosResponse = await Usuario.find()
         const usuariosJson = await usuariosResponse
     
         return res.json(usuariosJson)
     });
 
-    app.post('/usuarios', async(req,res) =>{
-
-        const validate = await Usuario.findOne({cpf:req.body.cpf})
+router.post('/registro', async(req,res) =>{
+    const validate = await Usuario.findOne({cpf:req.body.cpf})
     if(validate){
         return res.json({massage:"Já esxite um usuario cadastrado com esse cpf, tente recuperar sua senha"})
     }else{
@@ -34,4 +34,4 @@ module.exports = function (app) {
     }
     })
 
-}
+module.exports = router */
