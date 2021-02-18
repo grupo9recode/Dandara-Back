@@ -7,6 +7,11 @@
     <title>Dandara</title>
 </head>
 <body>
+    {{#if error}}
+    <div class="alert alert-danger">{{error}}</div>
+    {{else}}
+
+    {{/if}}
     {{{body}}}
 </body>
 </html>
