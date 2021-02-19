@@ -8,6 +8,19 @@
     require('../models/ProdMong')
     const Produto = mongoose.model('produtos');
     const {eAdmin} = require("../helpers/eAdmin")
+    const multer = require('multer')
+
+    const storage = multer.diskStorage({
+        destination: function(req,res,cb){
+            cb(null,"uploads/")
+        },
+        filename: function(req, file, cb){
+            cb(null, file.originalname);
+        }
+
+    })
+
+    const upload = multer({storage})
 
 //Rotas do Admin
     
@@ -93,7 +106,7 @@
         })
 
     //Rota para cadastrar Produtos
-        router.post("/produtos/cad", (req,res) =>{
+        router.post("/produtos/cad",upload.single("file"), (req,res) =>{
 
             /*var erros = []
             if(req.body.categoria == "0"){
