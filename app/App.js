@@ -15,7 +15,7 @@
     require("./config/auth")(passport)
     require('./models/ProdMong')
     const Produto = mongoose.model('produtos');
- 
+    const db = require("./config/db")
 
 //Configurações
     //Sessão
@@ -46,7 +46,7 @@
     app.use(cors())
     //Mongoose
     mongoose.Promise = global.Promise;
-    mongoose.connect('mongodb://localhost/dandara').then(() =>{
+    mongoose.connect(db.mongoURI).then(() =>{
         console.log("MongoDb Conectado a Dandara")
     }).catch((err) =>{
         console.log("Erro ao se conectar ao Mongo: " +err)
@@ -104,7 +104,7 @@
     app.use('/admin', admin)
 
 //informação da porta do servidor
-const PORT = 3050
+const PORT = process.env.PORT || 3050
 app.listen(PORT, function(){
-    console.log(`Servidor rodando na porta ${PORT}`)
+    console.log(`Servidor rodando!`)
 })
