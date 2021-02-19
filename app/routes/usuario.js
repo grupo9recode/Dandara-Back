@@ -19,8 +19,8 @@ router.post("/registro", (req,res) => {
         erros.push({texto: "Nome inválido"})
     }
 
-    if(!req.body.email || typeof req.body.email == undefined || req.body.email ==null){
-        erros.push({texto: "E-mail inválido"})
+    if(!req.body.username || typeof req.body.username == undefined || req.body.username ==null){
+        erros.push({texto: "Username inválido"})
     }
 
     if(!req.body.senha || typeof req.body.senha == undefined || req.body.senha ==null){
@@ -31,9 +31,9 @@ router.post("/registro", (req,res) => {
         erros.push({texto: "Senha muito curta"})
     }
 
-    if(req.body.senha != req.body.senha2){
+    /*if(req.body.senha != req.body.senha2){
         erros.push({texto: "As senhas não coincidem"})
-    }
+    }*/
 
     if(erros.length > 0){
 
@@ -41,14 +41,18 @@ router.post("/registro", (req,res) => {
 
     }else{
 
-        Usuario.findOne({email: req.body.email}).then((usuario) => {
+        Usuario.findOne({email: req.body.username}).then((usuario) => {
             if(usuario){
-                req.flash("error_msg", "Já existe uma conta com este email no nosso sistema")
+                req.flash("error_msg", "Já existe uma conta com este username no nosso sistema")
                 res.redirect("/usuarios/registro")
             }else{
 
                 const novoUsuario = new Usuario({
+                    username: req.body.username,
                     nome: req.body.nome,
+                    cpf: req.body.cpf,
+                    numnis: req.body.numnis,
+                    celular: req.body.celular,
                     email: req.body.email,
                     senha: req.body.senha,
                     eAdmin: 1
@@ -90,8 +94,8 @@ router.get("/login", (req,res) => {
 router.post("/login", (req,res,next) => {
 
     passport.authenticate("local", {
-        successRedirect: "/",
-        failureRedirect: "/usuarios/login",
+        successRedirect: "http://localhost:3000/minhaconta",
+        failureRedirect: "/",
         failureFlash: true
     })(req,res,next)
     console.log("logado!")
