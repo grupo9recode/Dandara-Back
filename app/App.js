@@ -15,7 +15,7 @@
     require("./config/auth")(passport)
     require('./models/ProdMong')
     const Produto = mongoose.model('produtos');
-
+ 
 
 //Configurações
     //Sessão
@@ -102,9 +102,6 @@
     })
 
     app.use('/admin', admin)
-    
-
-
 
 //informação da porta do servidor
 const PORT = 3050

@@ -95,7 +95,7 @@ router.post("/login", (req,res,next) => {
 
     passport.authenticate("local", {
         successRedirect: "http://localhost:3000/minhaconta",
-        failureRedirect: "/",
+        failureRedirect: "http://localhost:3000/",
         failureFlash: true
     })(req,res,next)
     console.log("logado!")
