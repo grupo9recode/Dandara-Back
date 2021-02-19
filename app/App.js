@@ -1,7 +1,7 @@
 //Carregando Modulos
     const express = require('express')
     const bodyParser = require('body-parser')
-    const Produto = require('./models/Produto')
+    //const Produto = require('./models/Produto')
     const handlebars = require('express-handlebars');
     const cors = require('cors');
     const mongoose = require("mongoose");
@@ -30,6 +30,7 @@
         res.locals.success_msg = req.flash("success_msg")
         res.locals.error_msg = req.flash("error_msg")
         res.locals.error = req.flash("error")
+        res.locals.user = req.user || null
         next()
     })
 
@@ -55,14 +56,9 @@
     
     //rota adminitrativa
     app.use('/admin',admin)
+    app.use("/usuarios", usuarios)
 
-    //retorno dos dados em Json
-    app.get('/', async (req,res) => {
-    const produtosResponse = await Produto.findAll()
-    const produtosJson = await produtosResponse
-         return res.json(produtosJson)
-    })
-
+    
     //deletando produto   
     app.get('/delete/:id', function(req,res){
     Produto.destroy({where: {'id': req.params.id}}).then(function(){
@@ -95,7 +91,7 @@
     })
 
     app.use('/admin', admin)
-    app.use("/usuarios", usuarios)
+    
 
 
 

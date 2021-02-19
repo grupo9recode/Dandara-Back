@@ -7,7 +7,7 @@
     const Categoria = mongoose.model('categorias')
     require('../models/ProdMong')
     const Produto = mongoose.model('produtos');
-
+    const {eAdmin} = require("../helpers/eAdmin")
 
 //Rotas do Admin
     
@@ -16,7 +16,7 @@
             res.render("admin/index")
         })
 
-    //Rota que retorna as Catagorias cadastradas no formato JSON
+    //Rota que retorna as Categorias cadastradas no formato JSON
         router.get('/categorias', async (req,res) => {
             const categoriasResponse = await Categoria.find()
             const categoriasJson = await categoriasResponse
@@ -76,7 +76,7 @@
         })
 
     //Pota para deletar categoria
-        router.delete('/categorias/delete/:id', async(req,res)=>{
+        router.delete('/categorias/delete/:id', eAdmin, async(req,res)=>{
             const{id} = req.params;
             await Categoria.findOneAndDelete({_id:id});
 
