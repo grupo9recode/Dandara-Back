@@ -7,6 +7,8 @@
     const Categoria = mongoose.model('categorias')
     require('../models/ProdMong')
     const Produto = mongoose.model('produtos');
+    require('../models/servicos')
+    const Servico = mongoose.model('servicos')
     const {eAdmin} = require("../helpers/eAdmin")
     const multer = require('multer')
 
@@ -98,7 +100,16 @@
 
     //Rota para retornar produtos cadastrados em Json
         router.get("/produtos", async (req,res) => {
-            const produtosResponse = await Produto.find().populate("categoria")
+            const produtosResponse = await Produto.find()
+            const produtosJson = await produtosResponse
+            
+            return res.json(produtosJson)
+        
+        })
+
+        router.get("/produtos/:id", async (req,res) => {
+            const {id} = req.params;
+            const produtosResponse = await Produto.findOne({_id: id})
             const produtosJson = await produtosResponse
             
             return res.json(produtosJson)
@@ -139,7 +150,7 @@
             produto.username = req.body.username;
             produto.produto = req.body.produto;
             produto.categoria = req.body.categoria;
-            produto.imagem = req.body.imagem;
+            //produto.imagem = req.body.imagem;
             produto.valor = req.body.valor;
             produto.descricao = req.body.descricao
             produto.save();
@@ -154,6 +165,62 @@
 
             res.json({message:"Produto Deletado"});
         })
+    
+    //Rota para retornar servicos cadastrados em Json
+    router.get("/servicos", async (req,res) => {
+        const servicosResponse = await Servico.find()
+        const servicosJson = await servicosResponse
+        
+        return res.json(servicosJson)
+    })
+    //Rota para cadastrar Servicos
+    router.post("/servicos/cad",upload.single("file"), (req,res) =>{
 
+        /*var erros = []
+        if(req.body.categoria == "0"){
+            erros.push({message: "Categoria invalida, registre uma categoria"})
+        }
+        if(erros.length > 0){
+            console.log({erros:erros})
+        }*/
+            const novoServico = {
+                username: req.body.username,
+                servico: req.body.servico,
+                categoria: req.body.categoria,
+                imagem: req.body.imagem,
+                valor: req.body.valor,
+                descricao: req.body.descricao
+            }
+
+            new Servico(novoServico).save().then(()=> {
+            console.log("Servico cadastrado") 
+            }).catch((err) =>{
+                console.log(err)
+            })
+        
+
+    })
+
+    //Rota para alterar Servicos
+    router.put("/servicos/:id", async(req,res) =>{
+        const {id} = req.params;
+        const servico = await servico.findOne({_id: id});
+        servico.username = req.body.username;
+        servico.servico = req.body.servico;
+        servico.categoria = req.body.categoria;
+        //servico.imagem = req.body.imagem;
+        servico.valor = req.body.valor;
+        servico.descricao = req.body.descricao
+        servico.save();
+
+        res.json({message: "servico editado"})
+    })
+    //Rota para deletar Servico
+    router.delete('/servicos/delete/:id', async(req,res)=>{
+        const{id} = req.params;
+        await Servico.findOneAndDelete({_id:id});
+
+        res.json({message:"servico Deletado"});
+    })
 //exportação do modulo
 module.exports = router
