@@ -11,14 +11,17 @@ const Produto = new Schema({
         type: String,
         required: true
     },
-    categoria: {
+   /* categoria: {
         type: Schema.Types.ObjectId,
         ref: "categorias",
         required: true
+    },*/
+    categoria: {
+        type: String
     },
     imagem: {
-        type: String,
-        required: true
+        type: String
+       
     },
     valor:{
         type: Number,

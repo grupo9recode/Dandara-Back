@@ -13,6 +13,8 @@
     const usuarios = require("./routes/usuario");
     const passport = require('passport');
     require("./config/auth")(passport)
+    require('./models/ProdMong')
+    const Produto = mongoose.model('produtos');
 
 
 //Configurações
@@ -57,6 +59,15 @@
     //rota adminitrativa
     app.use('/admin',admin)
     app.use("/usuarios", usuarios)
+
+     //retorno dos dados em Json
+     app.get("/produtos", async (req,res) => {
+        const produtosResponse = await Produto.find()
+        const produtosJson = await produtosResponse
+        
+        return res.json(produtosJson)
+    
+    })
 
     
     //deletando produto   
