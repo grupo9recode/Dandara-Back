@@ -90,9 +90,9 @@ router.post("/registro", (req,res) => {
 router.get("/login", (req,res) => {
     res.render("usuarios/login")
 })
-
+//sistema de login
 router.post("/login", (req,res,next) => {
-
+//quando autenticado mostra para onde o usuário de ser redirecionado
     passport.authenticate("local", {
         successRedirect: "http://localhost:3000/minhaconta",
         failureRedirect: "http://localhost:3000/",
@@ -101,7 +101,7 @@ router.post("/login", (req,res,next) => {
     console.log("logado!")
 })
 
-//Sistema de logout
+//Sistema de logout 
 router.get("/logout", (req,res) => {
     req.logout()
     req.flash('sucess_msg', "Deslogado com sucesso!")
