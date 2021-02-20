@@ -16,7 +16,9 @@
     require('./models/ProdMong')
     const Produto = mongoose.model('produtos');
     const db = require("./config/db")
-
+    require("./models/servicos")
+    const Servico = mongoose.model("servicos")
+    
 //Configurações
     //Sessão
     app.use(session({
@@ -66,6 +68,14 @@
         const produtosJson = await produtosResponse
         
         return res.json(produtosJson)
+    
+    })
+
+    app.get("/servicos", async (req,res) => {
+        const servicosResponse = await Servico.find()
+        const servicosJson = await servicosResponse
+        
+        return res.json(servicosJson)
     
     })
 
