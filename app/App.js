@@ -17,8 +17,9 @@
     const Produto = mongoose.model('produtos');
     const db = require("./config/db")
     require("./models/servicos")
-    const Servico = mongoose.model("servicos")
     
+    const Servico = mongoose.model("servicos")
+
 //Configurações
     //Sessão
     app.use(session({
