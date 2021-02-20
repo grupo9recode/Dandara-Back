@@ -7,7 +7,7 @@ const Servico = new Schema({
         type: String,
         required: true
     },
-    produto: {
+    servico: {
         type: String,
         required: true
     },
